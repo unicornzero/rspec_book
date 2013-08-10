@@ -11,12 +11,9 @@ describe MessagesController do
       post :create, :message => { "text" => "a quick brown fox" }
     end
     
-    it "saves the message" do
-      message.should_receive(:save)
-      post :create
-    end
-
     context "when the message saves successfully" do
+      before { message.stub(:save).and_return(true) }
+
       it "sets a flash[:notice] message" do
         post :create
         flash[:notice].should eq("The message was saved successfully.")
@@ -29,14 +26,14 @@ describe MessagesController do
     end
 
     context "when the message fails to save" do
+      before { message.stub(:save).and_return(false) }
+
       it "assigns @message" do
-        message.stub(:save).and_return(false)
         post :create
         assigns[:message].should eq(message)
       end
 
       it "renders the new template" do
-        message.stub(:save).and_return(false)
         post :create
         response.should render_template("new")
       end

@@ -3,3 +3,4 @@ module ApplicationHelper
     yield if current_user.in_role?(role)
   end
 end
+
