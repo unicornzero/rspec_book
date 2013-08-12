@@ -36,7 +36,24 @@ describe User do
           )
         @zach.sent_messages.should == [msg]
       end
+    end
 
+    context "when the user is over their subscription limit" do
+      before(:each) do
+        @zach.subscription = Subscription.new
+        @zach.subscription.stub(:can_send_message?).and_return false
+      end
+
+
+      it "does not create a message" do
+        lambda {
+          @zach.send_message(
+            :title => "Book Update",
+            :text => "Beta 11 includes great stuff!",
+            :recipient => @david
+            )
+        }.should_not change(Message, :count)
+      end
     end
 
   end

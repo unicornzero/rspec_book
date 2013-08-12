@@ -5,7 +5,9 @@ class User < ActiveRecord::Base
   attr_accessible :login
 
   def send_message(message_attrs)
-    sent_messages.create! message_attrs
+    if subscription.can_send_message?
+      sent_messages.create! message_attrs
+    end
   end
 
 end
