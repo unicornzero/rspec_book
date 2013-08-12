@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130812010510) do
+ActiveRecord::Schema.define(:version => 20130812011917) do
 
   create_table "messages", :force => true do |t|
     t.string   "title"
@@ -22,10 +22,16 @@ ActiveRecord::Schema.define(:version => 20130812010510) do
     t.integer  "sender_id"
   end
 
-  create_table "users", :force => true do |t|
-    t.string   "login"
+  create_table "subscriptions", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "login"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "subscription_id"
   end
 
 end
